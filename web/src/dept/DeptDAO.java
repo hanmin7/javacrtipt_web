@@ -22,7 +22,7 @@ public class DeptDAO {
 		try {
 			conn = ConnectionManager.getConnnect();
 			String sql = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID as mgr_id, LOCATION_ID "
-						+ "FROM DEPARTMENTS "
+						+ "FROM hr.DEPARTMENTS "
 						+ "ORDER BY DEPARTMENT_ID";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -50,7 +50,7 @@ public class DeptDAO {
 		try {
 			conn = ConnectionManager.getConnnect();
 			String sql = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID as mgr_id, LOCATION_ID "
-						+ "FROM DEPARTMENTS "
+						+ "FROM hr.DEPARTMENTS "
 						+ "WHERE DEPARTMENT_ID=?"; //ctr+shi+x :대문자, y:소문자로 변경 단축키
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, deptVo.getDepartment_id());
@@ -77,7 +77,7 @@ public class DeptDAO {
 	public void delete(DeptVo deptVo) {
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "delete departments where department_id=?";
+			String sql = "delete hr.departments where department_id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, deptVo.getDepartment_id());
 			int r = pstmt.executeUpdate();
@@ -94,7 +94,7 @@ public class DeptDAO {
 	public void update(DeptVo deptVo) {
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "update departments set department_name = ? where department_id=?";
+			String sql = "update hr.departments set department_name = ? where department_id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, deptVo.getDepartment_name()); //? 첫번째 자리 값
 			pstmt.setInt(2, deptVo.getDepartment_id());
@@ -115,7 +115,7 @@ public class DeptDAO {
 			conn = ConnectionManager.getConnnect();
 
 			// 2. sql 구문 실행
-			String sql = "insert into departments (department_id, department_name)" + "values("
+			String sql = "insert into hr.departments (department_id, department_name)" + "values("
 					+ deptVo.getDepartment_id() + ", '" + deptVo.getDepartment_name() + "')";
 			Statement stmt = conn.createStatement();
 			int r = stmt.executeUpdate(sql); // 여기서는 sql 넣어줘야함.

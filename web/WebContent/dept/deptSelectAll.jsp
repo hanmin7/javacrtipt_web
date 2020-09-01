@@ -14,7 +14,8 @@
 		ArrayList<DeptVo> list = (ArrayList<DeptVo>)request.getAttribute("list");
 		for(DeptVo dept : list) {
 	%>
-		<tr><td><%=dept.getDepartment_id()%></td>
+		<tr><td><a href="deptSelect?department_id=<%=dept.getDepartment_id()%>"><%=dept.getDepartment_id()%></a></td>
+						<!-- a태그에서 href에 url?파라미터값=  %값  넘겨주는값이 여러개일 때 & , 한글은 인코딩 필요 -->
 			<td><%=dept.getDepartment_name()%></td></tr>
 	<% } %>
 	</table>

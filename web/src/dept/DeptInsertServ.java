@@ -16,12 +16,15 @@ public class DeptInsertServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DeptDAO dao = new DeptDAO();
-		
+		System.out.println("dept 등록 실행");
+		//1. 파라미터를 Vo에 담기
 		DeptVo deptVo = new DeptVo();
 		deptVo.setDepartment_id( Integer.parseInt(request.getParameter("department_id")));
 		deptVo.setDepartment_name(request.getParameter("department_name"));
+		//2. 등록 처리
+		DeptDAO dao = new DeptDAO();
 		dao.insert(deptVo);
+		//3. 결과 처리 (생략)
 		
 		//전체 조회 서블릿 페이지로 이동 (send)
 		response.sendRedirect("deptSelectAll");
