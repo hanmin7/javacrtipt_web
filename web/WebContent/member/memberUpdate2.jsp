@@ -1,10 +1,12 @@
+<%@page import="member.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>memberInsert</title>
+<title>memberUpdate</title>
 <script>
 	function inputCheck(){
 		//id, pw 필수입력 체크
@@ -42,57 +44,60 @@
 </script>
 </head>
 <body>
+
 <%@include file="/common/header.jsp" %>
 
 <h3 class="page_title">내정보조회</h3>
 <div class="regist">
 <form name="frm" method="post" id="frm" 
-		action="memberInsert.do"
+		action="memberUpdate"
 		onsubmit="return inputCheck()">
 	<div>
 		<label for="id">ID</label>
-		<input type="text" id="id" name="id">
+		<input type="text" id="id" name="id" value="${login.id }" readonly="readonly">
 	</div>
 	<div>
 		<label for="pw">PW</label>
-		<input type="password" id="pw" name="pw">
+		<input type="password" id="pw" name="pw" value="${login.pw }">
 	</div>
 	<div>
 		<label for="gender">성별</label>
-		<input type="radio" id="female" name="gender" value="f">
+		<input type="radio" id="female" name="gender" value="f" 
+			<c:if test ="${login.gender=='f'}">checked="checked"</c:if>>
 		<label for="female">여</label>
-		<input type="radio" id="male" name="gender" value="m">
+		<input type="radio" id="male" name="gender" value="m" 
+			<c:if test ="${login.gender=='m'}">checked="checked"</c:if>>
 		<label for="male">남</label>
 	</div>
 	<div>
 		<label for="job">직업</label>
 		<select id="job" name="job" size="4">
 			<option value="">선택</option>
-			<option value="developer">프로그래머</option>
-			<option value="DBA">DBA</option>
+			<option value="developer" >프로그래머</option>
+			<option value="DBA" >DBA</option>
 		</select>
 	</div>
 	<div>
 		<label for="reason">가입동기</label>
-		<textarea name="reason" id="reason"></textarea>
+		<textarea name="reason" id="reason">${login.reason }</textarea>
 	</div>
 	<div>
 		<label for="mail"> 메일수신여부</label>
-		<input type="checkbox" name="mailyn" value="Y">
+		<input type="checkbox" name="mailyn" value="Y" 
+			<c:if test ="${login.mailyn=='Y'}">checked="checked"</c:if>>
 	</div>
 	<div>
 		<label for="hobby"> 취미</label>
-		<input type="checkbox" name="hobby" value="read">독서
-		<input type="checkbox" name="hobby" value="game">게임
-		<input type="checkbox" name="hobby" value="ski">스키
+		<input type="checkbox" name="hobby" value="read" >독서
+		<input type="checkbox" name="hobby" value="game" >게임
+		<input type="checkbox" name="hobby" value="ski" >스키
 	</div>
 	<div>
 		<button type="reset">초기화</button>
-		<button type="button" onclick="inputCheck()">등록</button>
+		<!-- <button type="button" onclick="inputCheck()">등록</button> -->
 		<button>input등록</button>
 		<!-- form태그 안에 onsubmit="return inputCheck()"
 		script에 밖에  return true; 해줌.
-		
 		-->
 
 	</div>

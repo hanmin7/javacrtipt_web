@@ -1,3 +1,5 @@
+<%@page import="board.BoardVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,6 +9,7 @@
 <title>boardAll</title>
 </head>
 <body>
+<%@include file="/common/header.jsp" %>
 
 	<h3 class="page_title">보드 전체조회</h3>
 <!-- 	<ul class="search">
@@ -15,38 +18,34 @@
 		<li><button type="button">검색</button></li>
 	</ul> -->
 
-	<table border="1" id="members">
+	<table border="1" id="boards">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>작성자</th>
 				<th>제목</th>
+				<th>내용</th>
 				<th>작성일자</th>
 				<th>조회수</th>
 				<th>첨부파일</th>
 			</tr>
 		</thead>
 		<tbody>
+		<%
+			ArrayList<BoardVo> list = (ArrayList<BoardVo>)request.getAttribute("list");
+			for(BoardVo board : list) {
+				
+		%>
 			<tr>
-				<td>
-				<a href="boardSelect.jsp">1</a>
-				</td>
-				<td>chichi</td>
-				<td>wpahr</td>
-				<td>2020-08-27</td>
-				<td>2</td>
-				<td>yes</td>
+				<td><a href="boardSelect.jsp"><%=board.getNo() %></a></td>
+				<td><%=board.getPoster()%></td>
+				<td><%=board.getSubject()%></td>
+				<td><%=board.getContents()%></td>
+				<td><%=board.getLastpost()%></td>
+				<td><%=board.getViews()%></td>
+				<td><%=board.getFilename()%></td>
 			</tr>
-			<tr>
-				<td>
-				<a href="boardSelect.jsp">2</a>
-				</td>
-				<td>Eve</td>
-				<td>wwpahr</td>
-				<td>2020-08-27</td>
-				<td>1</td>
-				<td>yes</td>
-			</tr>
+		<% } %>	
 		</tbody>
 	</table>
 </body>

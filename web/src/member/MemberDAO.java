@@ -15,6 +15,19 @@ public class MemberDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	
+	//싱글톤
+	static MemberDAO instance;
+	public static MemberDAO getInstance() {
+		if(instance==null)
+			instance=new MemberDAO();
+			return instance;
+	}
+	//매번 서블릿에서 
+	//2. 서비스 처리(DB)
+			//MemberDAO dao = new MemberDAO();
+	//이렇게 처리하는게 번거로우니까 static으로 만들어서 쓸 수 있음.
+	//서블릿에서는  MemberDAO.getInstance().selectOne(memberVo); 이렇게 씀.
+	
 	
 	//전체조회
 	public ArrayList<MemberVo> selectAll(MemberVo MemberVo) {
@@ -171,10 +184,14 @@ public class MemberDAO {
 	public void update(MemberVo memberVo) {
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "UPDATE MEMBER SET PW = ? WHERE ID=?";
+			String sql = "UPDATE MEMBER SET PW = ?, JOB = ?, REASON = ?, MAILYN = ?, HOBBY = ? WHERE ID=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberVo.getPw()); //? 첫번째 자리 값
-			pstmt.setString(2, memberVo.getId());
+			pstmt.setString(2, memberVo.getJob());
+			pstmt.setString(3, memberVo.getReason());
+			pstmt.setString(4, memberVo.getMailyn());
+			pstmt.setString(5, memberVo.getHobby());
+			pstmt.setString(6, memberVo.getId());
 			int r = pstmt.executeUpdate(); // 이때는 executeUpdate()에 sql안들어감.
 			System.out.println(r + "건이 수정됨");
 		} catch (Exception e) {

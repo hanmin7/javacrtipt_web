@@ -3,6 +3,7 @@ package board;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class BoardDAO {
 				resultVo.setLastpost(rs.getString("lastpost"));
 				resultVo.setViews(rs.getString("views"));
 				resultVo.setFilename(rs.getString("filename"));
-				list.add(resultVo); //resultVo를 list에 담음
+				list.add(resultVo);
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +101,7 @@ public class BoardDAO {
 	public void update(BoardVo boardVo) {
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "UPDATE BOARD SET SUBJECT = ? WHERE NO=?";
+			String sql = "UPDATE BOARD SET SUBJECT= ? WHERE NO=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardVo.getSubject()); //? 첫번째 자리 값
 			pstmt.setString(2, boardVo.getNo());
@@ -118,29 +119,45 @@ public class BoardDAO {
 		try {
 			// 1. DB연결
 			conn = ConnectionManager.getConnnect();
+			conn.setAutoCommit(false); //자동커밋꺼놓음
 
+			//보드번호 조회
+			String seqSql = "select no from seq where tablename = 'board'";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(seqSql);
+			rs.next();
+			int no = rs.getInt(1);
+			
+			//보드번호 업데이트
+			seqSql = "update seq set no = no + 1 where tablename='board'";
+			stmt = conn.createStatement();
+			stmt.executeUpdate(seqSql);
+			
+			
+			//게시글 등록
 			// 2. sql 구문 실행
 			String sql = "INSERT INTO BOARD (NO, POSTER, SUBJECT, CONTENTS, LASTPOST, VIEWS, FILENAME)"
-			+ " VALUES(?,?,?,?,?,?,?)";
+						+ " VALUES(?,?,?,?, sysdate, 0,?)";
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, boardVo.getNo());
+			pstmt.setInt(1, no);
 			pstmt.setString(2, boardVo.getPoster());
 			pstmt.setString(3, boardVo.getSubject());
 			pstmt.setString(4, boardVo.getContents());
-			pstmt.setString(5, boardVo.getLastpost());
-			pstmt.setString(6, boardVo.getViews());
-			pstmt.setString(7, boardVo.getFilename());
-
-			int r = pstmt.executeUpdate();
+			pstmt.setString(5, boardVo.getFilename());
+			//게시글넘버 select max(no)+1 from board로도 쓸 수 있음
 			
-			
+			pstmt.executeUpdate();
+			conn.commit();
 			
 			// 3. 결과 처리
-			if (r == 1) {
-				System.out.println(r + "건이 처리됨");
-			}
+
 		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		} finally {
 			// 4. 연결 해제 (연결횟수제한으로인해 해제까지 해줘야함)

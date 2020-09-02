@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>memberSelect</title>
+<title>boardSelect</title>
 </head>
 <body>
+<%@include file="/common/header.jsp" %>
 
 	<h3 class="page_title">보드 조회</h3>
 	

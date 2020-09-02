@@ -11,28 +11,30 @@
 		if(frm.subject.value == ""){
 			window.alert("제목 입력");
 			frm.subject.focus();
-			return;
+			return false;
 		}
 		if(frm.contents.value == ""){
 			window.alert("내용 입력");
 			frm.contents.focus();
-			return;
+			return false;
 		}
-		
+		return true;
 	}
 </script>
 </head>
 <body>
+<%@include file="/common/header.jsp" %>
+
 <h3 class="page_title">게시글등록</h3>
 <div class="regist">
 <form name="frm" method="post" id="frm" 
-		action="memberInsertProc.jsp"
+		action="boardInsert.do"
 		onsubmit="return inputCheck()">
-	<div>
-		<label for="writer">writer</label>
-		<input type="text" id="writer" name="writer">
-	</div>
 	
+	<div>
+		<label for="poster">writer</label>
+		<input type="text" id="poster" name="poster">
+	</div>
 	<div>
 		<label for="subject">subject</label>
 		<input type="text" id="subject" name="subject">
@@ -44,12 +46,12 @@
 	</div>
 	
 	<div>
-		<label for="file">Select a file:</label>
-  		<input type="file" id="file" name="file">
+		<label for="filename">Select a file:</label>
+  		<input type="file" id="filename" name="filename">
 	</div>
 	<div>
 		<button type="reset">초기화</button>
-		<button type="button" onclick="inputCheck()">등록</button>
+		<button type="submit" >등록</button>
 	</div>
 
 </form>
