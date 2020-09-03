@@ -36,9 +36,9 @@ public class MemberDAO {
 		ArrayList<MemberVo> list = new ArrayList<MemberVo>();
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "SELECT ID, PW, GENDER, JOB, REASON, MAILYN, HOBBY "
-						+ "FROM MEMBER "
-						+ "ORDER BY ID";
+			String sql = "SELECT ID, PW, GENDER, JOB, REASON, MAILYN, HOBBY, REGDATE"
+						+ " FROM MEMBER "
+						+ " ORDER BY ID";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) { //list니까 while문 사용
@@ -50,6 +50,7 @@ public class MemberDAO {
 				resultVo.setReason(rs.getString("reason"));
 				resultVo.setMailyn(rs.getString("mailyn"));
 				resultVo.setHobby(rs.getString("hobby"));
+				resultVo.setRegdate(rs.getString("regdate"));
 				list.add(resultVo); //resultVo를 list에 담음
 			} 
 		} catch (Exception e) {
@@ -67,8 +68,8 @@ public class MemberDAO {
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "SELECT ID, PW, GENDER, JOB, REASON, MAILYN "
-						+ "FROM MEMBER "
+			String sql = "SELECT ID, PW, GENDER, JOB, REASON, MAILYN, HOBBY, REGDATE"
+						+ " FROM MEMBER "
 						+ "WHERE ID=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberVo.getId());
@@ -81,6 +82,8 @@ public class MemberDAO {
 				resultVo.setJob(rs.getString("job"));
 				resultVo.setReason(rs.getString("reason"));
 				resultVo.setMailyn(rs.getString("mailyn"));
+				resultVo.setHobby(rs.getString("hobby"));
+				resultVo.setRegdate(rs.getString("regdate"));
 			} else {
 				System.out.println("no data");
 			}

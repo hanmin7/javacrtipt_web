@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<% String id = (String)session.getAttribute("id"); %>
 <ul>
-<% if(id==null) { %>
+ <c:if test= "${empty sessionScope.id}">
+<%--  <c:if test= "${sessionScope.id == null}"> --%>
 	<li><a href="/web/member/login.jsp">로그인</a>
-<% } else { %>
-	<%=id%>님<a href="/web/member/logout">로그아웃</a>
+ </c:if>
+ <c:if test= "${not empty sessionScope.id}">
+<%--  <c:if test= "${sessionScope.id != null}"> --%>
+	${sessionScope.id}님<a href="/web/member/logout">로그아웃</a>
 	<li><a href="/web/member/memberUpdate">정보수정</a>
-<% } %>
+ </c:if>
 	<li><a href="<%=application.getContextPath() %>/dept/DeptInsertFormServ">부서등록폼</a>
 	<li><a href="/web/dept/deptSelectAll">부서전체조회</a>
 	<li><a href="/web/member/memberInsert.do">회원가입</a>

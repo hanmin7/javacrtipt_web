@@ -17,4 +17,12 @@
   	<error-code>404</error-code>
   	<location>/test/error.jsp</location>
   </error-page>
+  <!-- <filter-mapping>
+  	<filter-name>second</filter-name>
+  	<url-pattern>/dept/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>first</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping> -->
 </web-app>

@@ -33,7 +33,9 @@ public class MemberUpdateServ extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
+		if(memberVo.getMailyn()==null) {
+			memberVo.setMailyn("N");
+		}
 		
 		// 2. DB 등록 처리
 		MemberDAO dao = new MemberDAO();
@@ -41,6 +43,7 @@ public class MemberUpdateServ extends HttpServlet {
 		// 3. 결과 처리 (생략)
 		
 		// 조회 서블릿 페이지로 이동 (send)
+		request.getSession().setAttribute("login", memberVo);
 		response.sendRedirect("memberSelectAll.do");
 	}
 

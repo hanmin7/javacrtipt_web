@@ -87,6 +87,7 @@
 		<input type="checkbox" name="hobby" value="read" <% if(member.getHobby() != null && member.getHobby().contains("read")){out.print("checked='checked'");}%>>독서
 		<input type="checkbox" name="hobby" value="game" <% if(member.getHobby() != null && member.getHobby().contains("game")){out.print("checked='checked'");}%>>게임
 		<input type="checkbox" name="hobby" value="ski" <% if(member.getHobby() != null && member.getHobby().contains("ski")){out.print("checked='checked'");}%>>스키
+		
 	</div>
 	<div>
 		<button type="reset">초기화</button>
