@@ -115,11 +115,15 @@ public class DeptDAO {
 			conn = ConnectionManager.getConnnect();
 
 			// 2. sql 구문 실행
-			String sql = "insert into hr.departments (department_id, department_name)" + "values("
-					+ deptVo.getDepartment_id() + ", '" + deptVo.getDepartment_name() + "')";
-			Statement stmt = conn.createStatement();
-			int r = stmt.executeUpdate(sql); // 여기서는 sql 넣어줘야함.
-
+			String sql = "insert into hr.departments (department_id, department_name, manager_id, location_id) " 
+						+ "values(?,?,?,?)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,deptVo.getDepartment_id());
+			pstmt.setString(2,deptVo.getDepartment_name());
+			pstmt.setInt(3,deptVo.getManager_id());
+			pstmt.setInt(4,deptVo.getLocation_id());
+			
+			int r = pstmt.executeUpdate();
 			// 3. 결과 처리
 			if (r == 1) {
 				System.out.println(r + "건이 처리됨");

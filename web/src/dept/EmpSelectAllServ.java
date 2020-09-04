@@ -1,6 +1,8 @@
 package dept;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DeptInsertFormServ
+ * Servlet implementation class EmpSelectAllServ
  */
-@WebServlet("/dept/DeptInsertFormServ")
-public class DeptInsertFormServ extends HttpServlet {
+@WebServlet("/dept/empSelectAllServ")
+public class EmpSelectAllServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeptInsertFormServ() {
+    public EmpSelectAllServ() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +28,11 @@ public class DeptInsertFormServ extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("deptInsertForm.jsp")
+		System.out.println("emp 전체조회 실행");
+		ArrayList<EmpVO> list = (ArrayList<EmpVO>) EmpDAO.getInstance().selectAll();
+		request.setAttribute("empList", list);
+		
+		request.getRequestDispatcher("empSelectAll.jsp")
 				.forward(request, response);
 	}
 

@@ -12,8 +12,10 @@
 	${sessionScope.id}님<a href="/web/member/logout">로그아웃</a>
 	<li><a href="/web/member/memberUpdate">정보수정</a>
  </c:if>
-	<li><a href="<%=application.getContextPath() %>/dept/DeptInsertFormServ">부서등록폼</a>
+	<li><a href="<%=application.getContextPath() %>/dept/deptInsert">부서등록폼</a>
 	<li><a href="/web/dept/deptSelectAll">부서전체조회</a>
+	<li><a href="/web/dept/empInsert">사원등록폼</a>
+	<li><a href="/web/dept/empSelectAllServ">사원전체조회</a>
 	<li><a href="/web/member/memberInsert.do">회원가입</a>
 	<li><a href="/web/member/memberSelectAll.do">회원전체조회</a>
 	<li><a href="/web/board/boardInsert.do">보드입력</a>

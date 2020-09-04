@@ -9,6 +9,8 @@
 <title>deptSelectAll.jsp</title>
 </head>
 <body>
+<%@include file="/common/header.jsp" %>
+
 	<table border="1">
 	<% 
 		ArrayList<DeptVo> list = (ArrayList<DeptVo>)request.getAttribute("list");
