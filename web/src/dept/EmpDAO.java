@@ -74,15 +74,18 @@ public class EmpDAO {
 			conn = ConnectionManager.getConnnect();
 			
 			//2.sql구문 준비
-			String sql = "update employees set  last_name=?, email=?,"
-					+ " hire_date=?, job_id=? where employee_id = ?";
+			String sql = "update hr.employees set last_name=?, email=?,"
+					+ " hire_date=to_date(?,'yyyy-mm-dd HH24:mi:ss'), job_id=?, first_name=?, department_id=?, manager_id=? where employee_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			//3. 실행
 			pstmt.setString(1, dto.getLast_name());
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getHire_date());
 			pstmt.setString(4, dto.getJob_id());
-			pstmt.setString(5, dto.getEmployee_id());
+			pstmt.setString(5, dto.getFirst_name());
+			pstmt.setString(6, dto.getDepartment_id());
+			pstmt.setString(7, dto.getManager_id());
+			pstmt.setString(8, dto.getEmployee_id());
 			r = pstmt.executeUpdate();
 			//4. 결과처리
 			System.out.println(r + " 건이 수정됨");
@@ -148,7 +151,7 @@ public class EmpDAO {
 		EmpVO emp = new EmpVO();
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "select * from employees where employee_id = ?";
+			String sql = "select * from hr.employees where employee_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getEmployee_id());
 			rs = pstmt.executeQuery();

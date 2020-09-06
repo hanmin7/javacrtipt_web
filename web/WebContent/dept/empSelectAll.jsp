@@ -14,6 +14,8 @@
 	<%@include file="/common/header.jsp" %>
 
 	<table border="1" id="members">
+	
+	
 		<thead>
 			<tr>
 				<th>emp_id</th>
@@ -29,7 +31,7 @@
 		<tbody>
 		<c:forEach items="${empList}" var="emp" >
 			<tr>
-				<td>${emp.getEmployee_id()}</td>
+				<td><a href="empUpdate?employee_id=${emp.getEmployee_id()}">${emp.getEmployee_id()}</a></td>
 				<td>${emp.getFirst_name()}</td>
 				<td>${emp.getLast_name()}</td>
 				<td>${emp.getEmail()}</td>
