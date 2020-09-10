@@ -5,6 +5,34 @@ public class DeptVo {
 	private String  department_name;
 	private Integer manager_id;
 	private Integer location_id;
+	private Integer first;
+	private Integer last;
+	
+	
+	
+	public Integer getFirst() {
+		return first;
+	}
+
+
+
+	public void setFirst(Integer first) {
+		this.first = first;
+	}
+
+
+
+	public Integer getLast() {
+		return last;
+	}
+
+
+
+	public void setLast(Integer last) {
+		this.last = last;
+	}
+
+
 
 	public DeptVo() {}
 
@@ -17,6 +45,7 @@ public class DeptVo {
 
 
 
+	
 	public DeptVo(Integer department_id, String department_name) {
 		super();
 		this.department_id = department_id;

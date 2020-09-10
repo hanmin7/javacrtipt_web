@@ -14,17 +14,31 @@ public class DeptDAO {
 	PreparedStatement pstmt;
 	
 	
-	//전체조회
+	//전체조회 (+ 페이징처리  +검색)
 	public ArrayList<DeptVo> selectAll(DeptVo deptVo) {
 		DeptVo resultVo = null;
 		ResultSet rs = null;
 		ArrayList<DeptVo> list = new ArrayList<DeptVo>(); //여러건 담아와야하니까 list에 담음.
 		try {
 			conn = ConnectionManager.getConnnect();
-			String sql = "SELECT DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID as mgr_id, LOCATION_ID "
+			String where = "where 1=1";
+			if(deptVo.getDepartment_name() != null) {
+				where += "and department_name like '%' || ? || '%'";
+			}
+			String sql = "select a.*  from ( select rownum rn, b.*  from ( "
+						+ "SELECT DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID as mgr_id, LOCATION_ID "
 						+ "FROM hr.DEPARTMENTS "
-						+ "ORDER BY DEPARTMENT_ID";
+						+ where
+						+ " ORDER BY DEPARTMENT_ID"
+						+ " ) b ) a where rn BETWEEN ? and ?";
 			pstmt = conn.prepareStatement(sql);
+			int pos = 1;
+			if(deptVo.getDepartment_name() != null) {
+				pstmt.setString(pos++, deptVo.getDepartment_name());
+			}
+			pstmt.setInt(pos++, deptVo.getFirst());
+			pstmt.setInt(pos++, deptVo.getLast());
+			
 			rs = pstmt.executeQuery();
 			while(rs.next()) { //list니까 while문 사용
 				resultVo = new DeptVo();
@@ -135,4 +149,32 @@ public class DeptDAO {
 			ConnectionManager.close(conn);
 		}
 	} //인서트
+	
+	
+	
+	//전체 건수 
+		public int count(DeptVo deptVo) {
+			int cnt = 0;
+			try {
+				conn = ConnectionManager.getConnnect();
+				String where = "where 1=1";
+				if(deptVo.getDepartment_name() != null) {
+					where += "and department_name like '%' || ? || '%'";
+				}
+				String sql = "select count(*) from hr.departments " + where;
+				pstmt = conn.prepareStatement(sql);
+				int pos = 1;
+				if(deptVo.getDepartment_name() != null) {
+					pstmt.setString(pos++, deptVo.getDepartment_name());
+				}
+				ResultSet rs = pstmt.executeQuery();
+				rs.next();
+				cnt = rs.getInt(1);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				ConnectionManager.close(conn);
+			}
+			return cnt;
+		}
 }
