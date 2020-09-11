@@ -29,7 +29,8 @@
 <div class="regist">
 <form name="frm" method="post" id="frm" 
 		action="boardInsert.do"
-		onsubmit="return inputCheck()">
+		onsubmit="return inputCheck()"
+		enctype="multipart/form-data">
 	
 	<div>
 		<label for="poster">writer</label>
