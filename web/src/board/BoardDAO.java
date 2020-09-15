@@ -88,7 +88,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardVo.getNo());
 			int r = pstmt.executeUpdate();
-			System.out.println(r + "건이 수정됨");
+			System.out.println(r + "건이 삭제됨");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -127,6 +127,7 @@ public class BoardDAO {
 			ResultSet rs = stmt.executeQuery(seqSql);
 			rs.next();
 			int no = rs.getInt(1);
+			boardVo.setNo(Integer.toString(no));
 			
 			//보드번호 업데이트
 			seqSql = "update seq set no = no + 1 where tablename='board'";
@@ -163,6 +164,7 @@ public class BoardDAO {
 			// 4. 연결 해제 (연결횟수제한으로인해 해제까지 해줘야함)
 			ConnectionManager.close(conn);
 		}
+		
 	} //인서트
 	
 	
